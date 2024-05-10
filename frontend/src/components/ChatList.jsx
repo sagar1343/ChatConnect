@@ -1,11 +1,9 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { List, Divider } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ChatListItem from './ChatListItem';
 
-const ChatList = () => {
-  const [active, setActive] = useState(-1);
-
+const ChatList = ({ active, setActive }) => {
   const chatsList = [
     {
       id: 1,

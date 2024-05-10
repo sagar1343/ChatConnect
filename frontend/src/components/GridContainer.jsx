@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import ChatList from './ChatList';
-import { Box, Grid, useTheme, useMediaQuery } from '@mui/material';
+import { Grid, useTheme, useMediaQuery } from '@mui/material';
 import SearchBar from './SearchBar';
 import ChatDetails from './ChatDetails';
+import Banner from './Banner';
 
 const GridContainer = () => {
+  const [active, setActive] = useState(-1);
   const theme = useTheme();
   const media = useMediaQuery(theme.breakpoints.up('md'));
   return (
@@ -21,17 +24,22 @@ const GridContainer = () => {
         md={4}
       >
         <SearchBar />
-        <ChatList />
+        <ChatList
+          active={active}
+          setActive={setActive}
+        />
       </Grid>
       {media && (
         <Grid
           item
+          height='100%'
           padding={1}
           xs={12}
           md={8}
           bgcolor='#e5e5e5'
+          sx={{ overflowY: 'scroll' }}
         >
-          <ChatDetails />
+          {active === -1 ? <Banner /> : <ChatDetails />}
         </Grid>
       )}
     </Grid>

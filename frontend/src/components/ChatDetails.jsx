@@ -1,6 +1,6 @@
-import { TextField, Fab, Stack } from '@mui/material';
+import { Box, TextField, Fab, Stack } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { useRef } from 'react';
+import { Fragment, useRef } from 'react';
 const ChatDetails = () => {
   const messageRef = useRef(null);
   const handleSubmit = (event) => {
@@ -10,33 +10,37 @@ const ChatDetails = () => {
     messageRef.current.value = '';
   };
   return (
-    <form onSubmit={(event) => handleSubmit(event)}>
-      <Stack
-        direction='row'
-        width='66%'
-        justifyContent='space-between'
-        position='fixed'
-        bottom='1rem'
-      >
-        <TextField
-          inputRef={messageRef}
-          required
-          color='success'
-          sx={{
-            bgcolor: '#fff',
-            flexGrow: 1,
-          }}
-          placeholder='Message'
-        ></TextField>
-        <Fab
-          type='submit'
-          sx={{ marginInline: '1rem' }}
-          color='success'
+    <>
+      <Box></Box>
+      <form onSubmit={(event) => handleSubmit(event)}>
+        <Stack
+          direction='row'
+          width='66%'
+          justifyContent='space-between'
+          position='fixed'
+          bottom='1rem'
         >
-          <SendIcon />
-        </Fab>
-      </Stack>
-    </form>
+          <TextField
+            inputRef={messageRef}
+            required
+            color='success'
+            sx={{
+              bgcolor: '#fff',
+              flexGrow: 1,
+            }}
+            placeholder='Message'
+            autoComplete='off'
+          ></TextField>
+          <Fab
+            type='submit'
+            sx={{ marginInline: '1rem' }}
+            color='success'
+          >
+            <SendIcon />
+          </Fab>
+        </Stack>
+      </form>
+    </>
   );
 };
 
