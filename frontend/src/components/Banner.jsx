@@ -1,10 +1,13 @@
 import banner from '../assets/banner.svg';
 const Banner = () => {
   return (
-    <img
-      width='100%'
-      src={banner}
-    />
+    <div className='h-100 alignBanner'>
+      <img
+        width='100%'
+        className='bannerImage'
+        src={banner}
+      />
+    </div>
   );
 };
 
