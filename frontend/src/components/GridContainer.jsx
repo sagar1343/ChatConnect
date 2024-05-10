@@ -18,8 +18,7 @@ const GridContainer = () => {
         height='100%'
         sx={{ overflowY: 'scroll' }}
         xs={12}
-        md={5}
-        lg={4}
+        md={4}
       >
         <SearchBar />
         <ChatList />
@@ -27,9 +26,9 @@ const GridContainer = () => {
       {media && (
         <Grid
           item
+          padding={1}
           xs={12}
-          md={7}
-          lg={8}
+          md={8}
           bgcolor='#e5e5e5'
         >
           <ChatDetails />
