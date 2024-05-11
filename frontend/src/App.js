@@ -1,13 +1,8 @@
 import React from 'react';
-import Navbar from './components/Navbar.jsx';
-import GridContainer from './components/GridContainer.jsx';
+import router from './routes.jsx';
+import { RouterProvider } from 'react-router-dom';
 const App = () => {
-  return (
-    <>
-      <Navbar />
-      <GridContainer />
-    </>
-  );
+  return <RouterProvider router={router}></RouterProvider>;
 };
 
 export default App;

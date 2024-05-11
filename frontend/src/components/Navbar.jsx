@@ -12,6 +12,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from './Logo';
+import { Link, useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -22,6 +23,7 @@ const theme = createTheme({
 });
 
 export default function PrimarySearchAppBar() {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -36,9 +38,10 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (path) => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    navigate(`/${path}`);
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -62,8 +65,9 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('profile')}>Profile</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('account')}>My account</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('signIn')}>Log-Out</MenuItem>
     </Menu>
   );
 
@@ -109,7 +113,7 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Account settings</p>
       </MenuItem>
     </Menu>
   );
@@ -129,7 +133,9 @@ export default function PrimarySearchAppBar() {
               aria-label='open drawer'
               sx={{ mr: 2 }}
             >
-              <Logo />
+              <Link to='/'>
+                <Logo />
+              </Link>
             </IconButton>
             <Typography
               variant='h6'

@@ -12,7 +12,10 @@ const ChatDetails = () => {
   return (
     <>
       <Box></Box>
-      <form onSubmit={(event) => handleSubmit(event)}>
+      <Box
+        component='form'
+        onSubmit={(event) => handleSubmit(event)}
+      >
         <Stack
           direction='row'
           width='66%'
@@ -39,7 +42,7 @@ const ChatDetails = () => {
             <SendIcon />
           </Fab>
         </Stack>
-      </form>
+      </Box>
     </>
   );
 };
