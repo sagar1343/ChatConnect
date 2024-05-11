@@ -1,8 +1,9 @@
-import { Box, TextField, Fab, Stack } from '@mui/material';
+import { Box, TextField, Fab, Stack, Chip } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { Fragment, useRef } from 'react';
+import { useRef } from 'react';
 const ChatDetails = () => {
   const messageRef = useRef(null);
+  const boxRef = useRef(null);
   const handleSubmit = (event) => {
     event.preventDefault();
     // update db
@@ -11,7 +12,7 @@ const ChatDetails = () => {
   };
   return (
     <>
-      <Box></Box>
+      <Box ref={boxRef}></Box>
       <Box
         component='form'
         onSubmit={(event) => handleSubmit(event)}
