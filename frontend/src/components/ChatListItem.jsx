@@ -10,12 +10,12 @@ const ChatListItem = ({ item }) => {
     <>
       <ListItemAvatar>
         <Avatar
-          alt={item.name}
-          src={item.image}
+          alt={item.firstName}
+          src={item.profilePicture.toString()}
         />
       </ListItemAvatar>
       <ListItemText
-        primary={item.primary}
+        primary={item.email}
         secondary={
           <>
             <Typography
@@ -24,9 +24,8 @@ const ChatListItem = ({ item }) => {
               variant='body2'
               color='text.primary'
             >
-              {item.name}
+              {item.firstName}
             </Typography>
-            {item.secondary}
           </>
         }
       />

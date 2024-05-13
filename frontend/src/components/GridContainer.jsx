@@ -7,6 +7,7 @@ import Banner from './Banner';
 
 const GridContainer = () => {
   const [active, setActive] = useState(-1);
+  const [users, setUsers] = useState([]);
   const theme = useTheme();
   const media = useMediaQuery(theme.breakpoints.up('md'));
   return (
@@ -23,10 +24,11 @@ const GridContainer = () => {
         xs={12}
         md={4}
       >
-        <SearchBar />
+        <SearchBar setUsers={setUsers} />
         <ChatList
           active={active}
           setActive={setActive}
+          users={users}
         />
       </Grid>
       {media && (
