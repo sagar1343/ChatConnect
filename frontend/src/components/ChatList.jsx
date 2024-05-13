@@ -30,7 +30,14 @@ const ChatList = ({ active, setActive, users }) => {
       {users.length != 0 ? (
         usersList
       ) : (
-        <Typography textAlign='center'>No User Found</Typography>
+        <Typography
+          textAlign='center'
+          fontSize={20}
+          fontWeight='bold'
+          color='gray'
+        >
+          No User Found
+        </Typography>
       )}
     </List>
   );

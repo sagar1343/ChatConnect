@@ -29,9 +29,9 @@ const SearchBar = ({ setUsers }) => {
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(grey[200], 0.8),
+    backgroundColor: alpha(grey[400], 0.8),
     '&:hover': {
-      backgroundColor: alpha(grey[200], 1),
+      backgroundColor: alpha(grey[400], 1),
     },
     marginRight: theme.spacing(2),
     marginLeft: theme.spacing(2),
@@ -55,10 +55,8 @@ const SearchBar = ({ setUsers }) => {
       padding: theme.spacing(1, 1, 1, 0),
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create('width'),
+      height: '2rem',
       width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '20ch',
-      },
     },
   }));
 
@@ -70,7 +68,6 @@ const SearchBar = ({ setUsers }) => {
       <StyledInputBase
         inputRef={searchRef}
         placeholder='Search…'
-        inputProps={{ 'aria-label': 'search' }}
         onKeyDown={(event) => handleChange(event)}
       />
     </Search>
