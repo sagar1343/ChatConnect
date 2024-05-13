@@ -10,17 +10,8 @@ import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from './Logo';
 import { Link, useNavigate } from 'react-router-dom';
-
-const theme = createTheme({
-  palette: {
-    light: {
-      main: '#ffff',
-    },
-  },
-});
 
 export default function PrimarySearchAppBar() {
   const navigate = useNavigate();
@@ -119,10 +110,10 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
-          color='light'
+          color=''
           position='static'
         >
           <Toolbar>
@@ -188,6 +179,6 @@ export default function PrimarySearchAppBar() {
         {renderMobileMenu}
         {renderMenu}
       </Box>
-    </ThemeProvider>
+    </>
   );
 }
