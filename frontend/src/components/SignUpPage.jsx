@@ -11,17 +11,52 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
+const registerUser = async (data) => {
+  try {
+    const res = await fetch('http://localhost:8000/chatconnect/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (res.ok) {
+      const user = await res.json();
+      return user;
+    } else {
+      throw new Error('Failed to register user');
+    }
+  } catch (error) {
+    console.error('Error registering user:', error.message);
+    throw error;
+  }
+};
+
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const [error, setError] = React.useState(null);
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(null);
     const data = new FormData(event.currentTarget);
-    console.log({
+    const userData = {
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+    try {
+      const user = await registerUser(userData);
+      console.log('User registered successfully:', user);
+      navigate('/');
+    } catch (error) {
+      setError(error.message);
+      console.error('Error registering user:', error.message);
+    }
   };
 
   return (
@@ -52,8 +87,7 @@ export default function SignUp() {
             </Typography>
             <Box
               component='form'
-              noValidate
-              onSubmit={handleSubmit}
+              onSubmit={(event) => handleSubmit(event)}
               sx={{ mt: 3 }}
             >
               <Grid
@@ -96,6 +130,7 @@ export default function SignUp() {
                   xs={12}
                 >
                   <TextField
+                    type='email'
                     required
                     fullWidth
                     color='success'
@@ -103,6 +138,18 @@ export default function SignUp() {
                     label='Email Address'
                     name='email'
                     autoComplete='email'
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                >
+                  <TextField
+                    type='file'
+                    fullWidth
+                    color='success'
+                    id='profilePicture'
+                    name='profilePicture'
                   />
                 </Grid>
                 <Grid
@@ -123,7 +170,14 @@ export default function SignUp() {
                 <Grid
                   item
                   xs={12}
-                ></Grid>
+                >
+                  <Typography
+                    color='red'
+                    textAlign='center'
+                  >
+                    {error}
+                  </Typography>
+                </Grid>
               </Grid>
               <Button
                 type='submit'
