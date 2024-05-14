@@ -1,79 +1,79 @@
 import {
-  Card,
-  CardActions,
-  CardContent,
   Box,
   Button,
   Container,
   Typography,
   Avatar,
+  CircularProgress,
+  Backdrop,
 } from '@mui/material';
+import Navbar from './Navbar';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useFetch from '../hooks/useFetch';
 
 const Profile = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const id = localStorage.getItem('chatconnectID');
+  const url = `http://localhost:8000/chatconnect/api/users/${id}`;
+  const { data, loading } = useFetch(url);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const id = localStorage.getItem('chatconnectID');
-        const res = await fetch(
-          `http://localhost:8000/chatconnect/api/users/${id}`
-        );
-        const userData = await res.json();
-        setUser(userData.user);
-        console.log(userData.user);
-      } catch (error) {
-        console.error('Error fetching user data:', error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
+    if (data) setUser(data.user);
+  }, [data]);
 
   return (
-    <Container
-      sx={{
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <Card sx={{ width: '50%', minWidth: '20rem' }}>
-        <CardContent>
-          <Typography
-            fontSize='2rem'
-            textAlign='center'
-            fontWeight='bold'
-            color='green'
-          >
-            Your Profile
-          </Typography>
+    <>
+      <Navbar />
+      {loading ? (
+        <Backdrop
+          open={true}
+          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: '#29bf12' }}
+        >
+          <CircularProgress color='inherit' />
+        </Backdrop>
+      ) : (
+        <Container
+          sx={{
+            height: '80vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <Box
-            margin={3}
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            gap={3}
+            sx={{
+              textAlign: 'center',
+              p: 4,
+            }}
           >
-            <Avatar sx={{ width: '70px', height: '70px' }} />
-            <Typography>Email: {user.email}</Typography>
-            <Typography>Name: {user.firstName}</Typography>
+            <Avatar sx={{ width: 100, height: 100, mx: 'auto', mb: 2 }} />
+            <Typography
+              variant='h4'
+              gutterBottom
+            >
+              {user?.firstName}
+            </Typography>
+            <Typography
+              variant='body1'
+              gutterBottom
+            >
+              Email: {user?.email}
+            </Typography>
+            <Box mt={4}>
+              <Button
+                onClick={() => navigate('/')}
+                color='success'
+                variant='contained'
+              >
+                Back
+              </Button>
+            </Box>
           </Box>
-        </CardContent>
-        <CardActions>
-          <Button
-            onClick={() => navigate('/')}
-            color='warning'
-          >
-            Back
-          </Button>
-        </CardActions>
-      </Card>
-    </Container>
+        </Container>
+      )}
+    </>
   );
 };
 
