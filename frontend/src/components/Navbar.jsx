@@ -56,9 +56,38 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => handleMenuClose('profile')}>Profile</MenuItem>
-      <MenuItem onClick={() => handleMenuClose('account')}>My account</MenuItem>
-      <MenuItem onClick={() => handleMenuClose('signIn')}>Log-Out</MenuItem>
+      {localStorage.getItem('chatconnectID')
+        ? [
+            <MenuItem
+              key='profile'
+              onClick={() => handleMenuClose('profile')}
+            >
+              Profile
+            </MenuItem>,
+            <MenuItem
+              key='signIn'
+              onClick={() => {
+                handleMenuClose('signIn');
+                localStorage.removeItem('chatconnectID');
+              }}
+            >
+              LogOut
+            </MenuItem>,
+          ]
+        : [
+            <MenuItem
+              key='signIn'
+              onClick={() => handleMenuClose('signIn')}
+            >
+              SignIn
+            </MenuItem>,
+            <MenuItem
+              key='signUp'
+              onClick={() => handleMenuClose('signUp')}
+            >
+              SignUp
+            </MenuItem>,
+          ]}
     </Menu>
   );
 

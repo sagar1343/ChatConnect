@@ -8,10 +8,31 @@ import {
   Typography,
   Avatar,
 } from '@mui/material';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+  const [user, setUser] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const id = localStorage.getItem('chatconnectID');
+        const res = await fetch(
+          `http://localhost:8000/chatconnect/api/users/${id}`
+        );
+        const userData = await res.json();
+        setUser(userData.user);
+        console.log(userData.user);
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Container
       sx={{
@@ -39,8 +60,8 @@ const Profile = () => {
             gap={3}
           >
             <Avatar sx={{ width: '70px', height: '70px' }} />
-            <Typography>Email-</Typography>
-            <Typography>Name-</Typography>
+            <Typography>Email: {user.email}</Typography>
+            <Typography>Name: {user.firstName}</Typography>
           </Box>
         </CardContent>
         <CardActions>

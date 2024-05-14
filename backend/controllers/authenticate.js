@@ -10,7 +10,13 @@ export const authenticate = async (req, res) => {
         const user = await User.findOne({ email: email });
         if (user) {
             const autherized = isAuthenticated(email, password, user);
-            res.status(200).send(autherized);
+            if (autherized) {
+                res.status(200).send({ autherized, id: user._id })
+            } else {
+                res.send({ message: 'Invalid password' })
+            };
+        } else {
+            res.send({ message: 'Invalid User' })
         }
     } catch (error) {
         res.status(500).json({ error })

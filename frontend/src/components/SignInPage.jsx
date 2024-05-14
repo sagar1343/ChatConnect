@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -11,17 +11,44 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
+const login = async (data) => {
+  try {
+    const res = await fetch('http://localhost:8000/chatconnect/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const jsonRes = await res.json();
+    return jsonRes;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const [message, setMessage] = React.useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setMessage(null);
     const data = new FormData(event.currentTarget);
-    console.log({
+    const loginCredentials = {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+    const authData = await login(loginCredentials);
+    if (authData.message) {
+      setMessage(authData.message);
+    } else {
+      localStorage.setItem('chatconnectID', authData.id);
+      navigate('/');
+    }
+    console.log(authData);
   };
 
   return (
@@ -52,8 +79,7 @@ export default function SignIn() {
             </Typography>
             <Box
               component='form'
-              onSubmit={handleSubmit}
-              noValidate
+              onSubmit={(event) => handleSubmit(event)}
               sx={{ mt: 1 }}
             >
               <TextField
@@ -64,6 +90,7 @@ export default function SignIn() {
                 id='email'
                 label='Email Address'
                 name='email'
+                type='email'
                 autoComplete='email'
                 autoFocus
               />
@@ -78,6 +105,12 @@ export default function SignIn() {
                 id='password'
                 autoComplete='current-password'
               />
+              <Typography
+                align='center'
+                color='red'
+              >
+                {message}
+              </Typography>
               <Button
                 type='submit'
                 fullWidth
@@ -91,12 +124,7 @@ export default function SignIn() {
                 item
                 textAlign='right'
               >
-                <Link
-                  href='/signUp'
-                  variant='body2'
-                >
-                  "Don't have an account? Sign Up"
-                </Link>
+                <Link to='/signUp'>Don't have an account? Sign Up</Link>
               </Grid>
             </Box>
           </Box>
