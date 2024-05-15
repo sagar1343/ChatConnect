@@ -29,7 +29,7 @@ const Profile = () => {
       {loading ? (
         <Backdrop
           open={true}
-          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: '#29bf12' }}
+          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
         >
           <CircularProgress color='inherit' />
         </Backdrop>
@@ -63,8 +63,7 @@ const Profile = () => {
             </Typography>
             <Box mt={4}>
               <Button
-                onClick={() => navigate('/')}
-                color='success'
+                onClick={() => navigate('/home')}
                 variant='contained'
               >
                 Back

@@ -76,8 +76,8 @@ export default function SignUp() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'success.main' }}>
-              <LockOutlinedIcon />
+            <Avatar sx={{ m: 1, bgcolor: '#fff' }}>
+              <LockOutlinedIcon color='primary' />
             </Avatar>
             <Typography
               component='h1'
@@ -104,7 +104,6 @@ export default function SignUp() {
                     name='firstName'
                     required
                     fullWidth
-                    color='success'
                     id='firstName'
                     label='First Name'
                     autoFocus
@@ -118,7 +117,6 @@ export default function SignUp() {
                   <TextField
                     required
                     fullWidth
-                    color='success'
                     id='lastName'
                     label='Last Name'
                     name='lastName'
@@ -133,7 +131,6 @@ export default function SignUp() {
                     type='email'
                     required
                     fullWidth
-                    color='success'
                     id='email'
                     label='Email Address'
                     name='email'
@@ -147,7 +144,6 @@ export default function SignUp() {
                   <TextField
                     type='file'
                     fullWidth
-                    color='success'
                     id='profilePicture'
                     name='profilePicture'
                   />
@@ -159,7 +155,6 @@ export default function SignUp() {
                   <TextField
                     required
                     fullWidth
-                    color='success'
                     name='password'
                     label='Password'
                     type='password'
@@ -182,7 +177,6 @@ export default function SignUp() {
               <Button
                 type='submit'
                 fullWidth
-                color='success'
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}
               >

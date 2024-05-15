@@ -6,7 +6,7 @@ import Profile from './components/Profile';
 import Playground from './components/Playground';
 
 const router = createBrowserRouter([
-  { path: '/', element: <Home /> },
+  { path: 'home', element: <Home /> },
   { path: 'signIn', element: <SignInPage /> },
   { path: 'signUp', element: <SignUpPage /> },
   { path: 'profile', element: <Profile /> },

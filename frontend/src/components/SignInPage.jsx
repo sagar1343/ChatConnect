@@ -46,7 +46,7 @@ export default function SignIn() {
       setMessage(authData.message);
     } else {
       localStorage.setItem('chatconnectID', authData.id);
-      navigate('/');
+      navigate('/home', { state: { user: authData.id } });
     }
     console.log(authData);
   };
@@ -68,8 +68,8 @@ export default function SignIn() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'success.main' }}>
-              <LockOutlinedIcon />
+            <Avatar sx={{ m: 1, bgcolor: '#fff' }}>
+              <LockOutlinedIcon color='primary' />
             </Avatar>
             <Typography
               component='h1'
@@ -86,7 +86,6 @@ export default function SignIn() {
                 margin='normal'
                 required
                 fullWidth
-                color='success'
                 id='email'
                 label='Email Address'
                 name='email'
@@ -98,7 +97,6 @@ export default function SignIn() {
                 margin='normal'
                 required
                 fullWidth
-                color='success'
                 name='password'
                 label='Password'
                 type='password'
@@ -115,7 +113,6 @@ export default function SignIn() {
                 type='submit'
                 fullWidth
                 variant='contained'
-                color='success'
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign In

@@ -11,7 +11,7 @@ const ChatListItem = ({ item }) => {
       <ListItemAvatar>
         <Avatar
           alt={item.firstName}
-          src={item.profilePicture.toString()}
+          // src={item.profilePicture}
         />
       </ListItemAvatar>
       <ListItemText

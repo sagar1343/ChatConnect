@@ -1,21 +1,22 @@
 import { useState } from 'react';
 import ChatList from './ChatList';
-import { Grid, useTheme, useMediaQuery } from '@mui/material';
+import { Grid, useTheme, useMediaQuery, Typography } from '@mui/material';
 import SearchBar from './SearchBar';
 import ChatDetails from './ChatDetails';
 import Banner from './Banner';
+import { useLocation } from 'react-router-dom';
 
 const GridContainer = () => {
-  const [active, setActive] = useState(-1);
+  const [active, setActive] = useState(null);
   const [users, setUsers] = useState([]);
   const theme = useTheme();
   const media = useMediaQuery(theme.breakpoints.up('md'));
   return (
     <Grid
-      marginTop={0}
+      padding={2}
       container
-      spacing={1}
-      height='calc(100vh - 64px)'
+      height='calc(100vh - 71.27px)'
+      rowGap={2}
     >
       <Grid
         item
@@ -24,12 +25,32 @@ const GridContainer = () => {
         xs={12}
         md={4}
       >
-        <SearchBar setUsers={setUsers} />
-        <ChatList
-          active={active}
-          setActive={setActive}
-          users={users}
-        />
+        {active && !media ? (
+          <Grid
+            item
+            height='100%'
+            padding={1}
+            xs={12}
+            md={8}
+            bgcolor='#e5e5e5'
+            sx={{ overflowY: 'scroll' }}
+          >
+            <ChatDetails activeUserID={active} />
+          </Grid>
+        ) : (
+          [
+            <SearchBar
+              key='search'
+              setUsers={setUsers}
+            />,
+            <ChatList
+              key='list'
+              active={active}
+              setActive={setActive}
+              users={users}
+            />,
+          ]
+        )}
       </Grid>
       {media && (
         <Grid
@@ -41,7 +62,7 @@ const GridContainer = () => {
           bgcolor='#e5e5e5'
           sx={{ overflowY: 'scroll' }}
         >
-          {active === -1 ? <Banner /> : <ChatDetails />}
+          {active ? <ChatDetails activeUserID={active} /> : <Banner />}
         </Grid>
       )}
     </Grid>

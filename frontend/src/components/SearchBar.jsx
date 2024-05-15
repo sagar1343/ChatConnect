@@ -29,10 +29,7 @@ const SearchBar = ({ setUsers }) => {
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(grey[400], 0.8),
-    '&:hover': {
-      backgroundColor: alpha(grey[400], 1),
-    },
+    backgroundColor: '#e5e5e5',
     marginRight: theme.spacing(2),
     marginLeft: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
