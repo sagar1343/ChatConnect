@@ -14,22 +14,31 @@ import Message from './Message';
 const ChatDetails = ({ chatId }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [participants, setParticipants] = useState([]);
   const messageRef = useRef(null);
   const boxRef = useRef(null);
   const senderId = localStorage.getItem('chatconnectID');
 
   useEffect(() => {
+    const fetchChatDetails = async () => {
+      const response = await fetch(
+        `http://localhost:8000/chatconnect/api/chats/${chatId}`
+      );
+      const data = await response.json();
+      setParticipants(data.participants);
+    };
+
     const fetchMessages = async () => {
       const response = await fetch(
         `http://localhost:8000/chatconnect/api/messages?chatID=${chatId}`
       );
       const data = await response.json();
-      console.log(data);
       setMessages(data);
       setLoading(false);
     };
 
     if (chatId) {
+      fetchChatDetails();
       fetchMessages();
     }
   }, [chatId]);
@@ -66,6 +75,10 @@ const ChatDetails = ({ chatId }) => {
     messageRef.current.value = '';
   };
 
+  const receiverId = participants.find(
+    (participant) => participant._id !== senderId
+  )?._id;
+
   return (
     <>
       {loading ? (
@@ -85,7 +98,11 @@ const ChatDetails = ({ chatId }) => {
             alignItems='center'
             padding={2}
           >
-            {}
+            {participants.map((participant) => {
+              if (participant._id !== senderId) {
+                return participant.firstName;
+              }
+            })}
           </Box>
           <Divider />
           <Box
@@ -100,6 +117,7 @@ const ChatDetails = ({ chatId }) => {
                 senderID={item.senderID}
                 message={item.content}
                 createdAt={item.createdAt}
+                receiverId={receiverId}
               />
             ))}
           </Box>
