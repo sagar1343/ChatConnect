@@ -19,13 +19,13 @@ app.use('/chatconnect/api/users', userRouter);
 app.use('/chatconnect/api/messages', messageRouter);
 app.use('/chatconnect/api/chats', chatRouter);
 
-io.on('connection', (socket) => {
-  console.log('Connection Established!!', socket.id);
-  socket.on('sendMessage', (message) => {
-    console.log('message Recieved', message);
-    io.emit('recieveMessage', message);
-  });
-});
+// io.on('connection', (socket) => {
+//   console.log('Connection Established!!', socket.id);
+//   socket.on('sendMessage', (message) => {
+//     console.log('message Recieved', message);
+//     io.emit('recieveMessage', message);
+//   });
+// });
 
 mongoose
   .connect('mongodb://localhost:27017/chatconnect')

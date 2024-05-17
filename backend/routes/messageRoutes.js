@@ -3,7 +3,7 @@ import { getMessage, createMessage } from '../controllers/messageControllers.js'
 
 const messageRouter = express.Router();
 
-messageRouter.get('/:id', getMessage);
+messageRouter.get('/', getMessage);
 messageRouter.post('/', createMessage);
 
 export default messageRouter;

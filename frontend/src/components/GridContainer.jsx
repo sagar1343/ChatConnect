@@ -4,7 +4,6 @@ import { Grid, useTheme, useMediaQuery, Typography } from '@mui/material';
 import SearchBar from './SearchBar';
 import ChatDetails from './ChatDetails';
 import Banner from './Banner';
-import { useLocation } from 'react-router-dom';
 
 const GridContainer = () => {
   const [active, setActive] = useState(null);
@@ -35,19 +34,18 @@ const GridContainer = () => {
             bgcolor='#e5e5e5'
             sx={{ overflowY: 'scroll' }}
           >
-            <ChatDetails activeUserID={active} />
+            <ChatDetails chatId={active} />
           </Grid>
         ) : (
           [
-            <SearchBar
-              key='search'
-              setUsers={setUsers}
-            />,
+            // <SearchBar
+            //   key='search'
+            //   setUsers={setUsers}
+            // />,
             <ChatList
               key='list'
               active={active}
               setActive={setActive}
-              users={users}
             />,
           ]
         )}
@@ -62,7 +60,7 @@ const GridContainer = () => {
           bgcolor='#e5e5e5'
           sx={{ overflowY: 'scroll' }}
         >
-          {active ? <ChatDetails activeUserID={active} /> : <Banner />}
+          {active ? <ChatDetails chatId={active} /> : <Banner />}
         </Grid>
       )}
     </Grid>

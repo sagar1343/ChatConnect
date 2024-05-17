@@ -1,5 +1,4 @@
-import { styled, alpha, InputBase } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { styled, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useRef } from 'react';
 

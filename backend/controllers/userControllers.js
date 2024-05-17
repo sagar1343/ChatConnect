@@ -16,7 +16,7 @@ export const getAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const newUser = await User(req.body);
+    const newUser = new User(req.body);
     await newUser.save();
     res.status(201);
     res.send({

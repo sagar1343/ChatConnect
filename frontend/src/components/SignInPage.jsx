@@ -25,7 +25,7 @@ const login = async (data) => {
     const jsonRes = await res.json();
     return jsonRes;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
   }
 };
 

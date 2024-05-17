@@ -1,10 +1,14 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
-const Message = ({ message }) => {
+import { useEffect, useState } from 'react';
+
+const Message = ({ authUserID, senderID, message, createdAt }) => {
+  const align = senderID === authUserID ? 'flex-end' : 'flex-start';
+
   return (
     <Box
       display='flex'
       flexDirection='column'
+      alignItems={align}
       gap={1}
       m={2}
     >
@@ -12,8 +16,8 @@ const Message = ({ message }) => {
         p={1}
         sx={{
           maxWidth: '15rem',
-          display: 'inline-block',
           whiteSpace: 'normal',
+          textOverflow: 'wrap',
           borderRadius: '20px',
           bgcolor: '#2097f4',
         }}
@@ -24,7 +28,7 @@ const Message = ({ message }) => {
         px={1}
         fontSize='13px'
       >
-        {'22/12/21'}
+        {new Date(createdAt).toLocaleTimeString()}
       </Typography>
     </Box>
   );

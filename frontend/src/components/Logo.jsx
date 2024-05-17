@@ -7,9 +7,6 @@ const Logo = () => {
       src={chatLogo}
       alt='chat-logo'
       height={40}
-      onClick={() => {
-        window.location.reload();
-      }}
     />
   );
 };

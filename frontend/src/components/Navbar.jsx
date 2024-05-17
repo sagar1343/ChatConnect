@@ -150,9 +150,9 @@ export default function PrimarySearchAppBar() {
               aria-label='open drawer'
               sx={{ mr: 2 }}
             >
-              <Link to='/'>
+              <Box onClick={() => window.location.reload()}>
                 <Logo />
-              </Link>
+              </Box>
             </IconButton>
             <Typography
               variant='h6'

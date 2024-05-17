@@ -16,8 +16,7 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const id = localStorage.getItem('chatconnectID');
-  const url = `http://localhost:8000/chatconnect/api/users/${id}`;
-  const { data, loading } = useFetch(url);
+  const { data, loading } = useFetch(`users/${id}`);
 
   useEffect(() => {
     if (data) setUser(data.user);
