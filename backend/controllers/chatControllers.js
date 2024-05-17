@@ -1,5 +1,4 @@
 import Chat from '../models/chatModel.js';
-import User from '../models/userModel.js'
 
 export const getAllChats = async (req, res) => {
     try {
@@ -11,13 +10,20 @@ export const getAllChats = async (req, res) => {
 }
 export const createChat = async (req, res) => {
     try {
-        const newChat = new Chat(req.body);
-        await newChat.save()
-        res.status(201).json({ newChat });
+        const participants = req.body.participants;
+        const existingChat = await Chat.findOne({ participants: { $all: participants } });
+        if (existingChat) {
+            return res.status(200).json(existingChat);
+        } else {
+            const newChat = new Chat({ participants });
+            await newChat.save();
+            return res.status(201).json(newChat);
+        }
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }
+
 export const getChat = async (req, res) => {
     try {
         const chats = await Chat.findById(req.params.id).populate('participants', 'firstName');

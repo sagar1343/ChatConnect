@@ -11,7 +11,7 @@ const chatSchema = mongoose.Schema({
     ]
   },
 });
-
+chatSchema.index({ participants: 1 }, { unique: true })
 const Chat = mongoose.model('Chat', chatSchema);
 
 export default Chat;

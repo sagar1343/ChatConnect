@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import ChatList from './ChatList';
 import { Grid, useTheme, useMediaQuery, Typography } from '@mui/material';
-import SearchBar from './SearchBar';
 import ChatDetails from './ChatDetails';
 import Banner from './Banner';
 
 const GridContainer = () => {
   const [active, setActive] = useState(null);
-  const [users, setUsers] = useState([]);
   const theme = useTheme();
   const media = useMediaQuery(theme.breakpoints.up('md'));
   return (
@@ -37,17 +35,11 @@ const GridContainer = () => {
             <ChatDetails chatId={active} />
           </Grid>
         ) : (
-          [
-            // <SearchBar
-            //   key='search'
-            //   setUsers={setUsers}
-            // />,
-            <ChatList
-              key='list'
-              active={active}
-              setActive={setActive}
-            />,
-          ]
+          <ChatList
+            key='list'
+            active={active}
+            setActive={setActive}
+          />
         )}
       </Grid>
       {media && (

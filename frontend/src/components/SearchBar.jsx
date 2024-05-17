@@ -4,13 +4,13 @@ import { useRef } from 'react';
 
 const SearchBar = ({ setUsers }) => {
   const searchRef = useRef(null);
+  const senderId = localStorage.getItem('chatconnectID');
 
   const fetchUser = async (searchedUser) => {
     const URL = 'http://localhost:8000/chatconnect/api/users';
     try {
       const res = await fetch(`${URL}?search=${searchedUser}`);
       const jsonRes = await res.json();
-      console.log(jsonRes);
       return jsonRes.users;
     } catch (error) {
       console.error(error);
@@ -21,7 +21,8 @@ const SearchBar = ({ setUsers }) => {
     if (event.key === 'Enter' && searchRef.current.value) {
       console.log(event);
       const users = await fetchUser(searchRef.current.value);
-      setUsers(users);
+      const filterUser = users.filter((user) => user._id !== senderId);
+      setUsers(filterUser);
     }
   };
 
