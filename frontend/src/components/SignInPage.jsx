@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -103,12 +104,7 @@ export default function SignIn() {
                 id='password'
                 autoComplete='current-password'
               />
-              <Typography
-                align='center'
-                color='red'
-              >
-                {message}
-              </Typography>
+              {message && <Alert severity='error'>{message}</Alert>}
               <Button
                 type='submit'
                 fullWidth

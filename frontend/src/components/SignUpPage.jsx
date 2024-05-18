@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
+import { Alert } from '@mui/material';
 
 const defaultTheme = createTheme();
 
@@ -54,7 +55,7 @@ export default function SignUp() {
       console.log(userData);
       const user = await registerUser(userData);
       console.log('User registered successfully:', user);
-      navigate('/login');
+      navigate('/signIn');
     } catch (error) {
       setError(error.message);
       console.error('Error registering user:', error.message);
@@ -177,12 +178,7 @@ export default function SignUp() {
                   item
                   xs={12}
                 >
-                  <Typography
-                    color='red'
-                    textAlign='center'
-                  >
-                    {error}
-                  </Typography>
+                  {error && <Alert severity='error'>{error}</Alert>}
                 </Grid>
               </Grid>
               <Button
