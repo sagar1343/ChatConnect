@@ -12,7 +12,7 @@ import ChatListItem from './ChatListItem';
 import { useNavigate } from 'react-router-dom';
 import NewChatPanel from './NewChatPanel';
 
-const ChatList = ({ active, setActive }) => {
+const ChatList = ({ active, setActive, del }) => {
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ const ChatList = ({ active, setActive }) => {
         setChats(filteredChats);
       })
       .catch((err) => console.log(err));
-  }, [open]);
+  }, [open, del]);
 
   const chatItems = chats.map((item) => (
     <Fragment key={item._id}>

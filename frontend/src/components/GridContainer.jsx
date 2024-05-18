@@ -6,6 +6,7 @@ import Banner from './Banner';
 
 const GridContainer = () => {
   const [active, setActive] = useState(null);
+  const [del, setDel] = useState(false);
   const theme = useTheme();
   const media = useMediaQuery(theme.breakpoints.up('md'));
   return (
@@ -32,13 +33,18 @@ const GridContainer = () => {
             bgcolor='#e5e5e5'
             sx={{ overflowY: 'scroll' }}
           >
-            <ChatDetails chatId={active} />
+            <ChatDetails
+              chatId={active}
+              del={del}
+              setDel={setDel}
+            />
           </Grid>
         ) : (
           <ChatList
             key='list'
             active={active}
             setActive={setActive}
+            del={del}
           />
         )}
       </Grid>
@@ -52,7 +58,15 @@ const GridContainer = () => {
           bgcolor='#e5e5e5'
           sx={{ overflowY: 'scroll' }}
         >
-          {active ? <ChatDetails chatId={active} /> : <Banner />}
+          {active ? (
+            <ChatDetails
+              chatId={active}
+              del={del}
+              setDel={setDel}
+            />
+          ) : (
+            <Banner />
+          )}
         </Grid>
       )}
     </Grid>

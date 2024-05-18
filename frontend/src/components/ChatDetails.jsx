@@ -9,20 +9,24 @@ import {
   Typography,
   Avatar,
 } from '@mui/material';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import SendIcon from '@mui/icons-material/Send';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Message from './Message';
+import Banner from './Banner';
 import { io } from 'socket.io-client';
 
-const ChatDetails = ({ chatId }) => {
-  const socket = io('http://localhost:8000/');
+const socket = io('http://localhost:8000/');
+
+const ChatDetails = ({ chatId, del, setDel }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [participants, setParticipants] = useState([]);
   const messageRef = useRef(null);
   const boxRef = useRef(null);
   const senderId = localStorage.getItem('chatconnectID');
-
+  const navigate = useNavigate();
   useEffect(() => {
     socket.emit('join-chat', chatId);
   }, [chatId]);
@@ -49,6 +53,7 @@ const ChatDetails = ({ chatId }) => {
       fetchChatDetails();
       fetchMessages();
     }
+    setDel(false);
   }, [chatId]);
 
   useEffect(() => {
@@ -84,9 +89,18 @@ const ChatDetails = ({ chatId }) => {
     messageRef.current.value = '';
   };
 
+  const deleteChat = async () => {
+    await fetch(`http://localhost:8000/chatconnect/api/chats/${chatId}`, {
+      method: 'DELETE',
+    });
+    setDel(true);
+    navigate('/home');
+  };
   const receiverId = participants.find(
     (participant) => participant._id !== senderId
   )?._id;
+
+  if (del) return <Banner />;
 
   return (
     <>
@@ -106,13 +120,23 @@ const ChatDetails = ({ chatId }) => {
             if (participant._id !== senderId) {
               return (
                 <Stack
-                  padding={1}
                   direction='row'
-                  spacing={2}
                   alignItems='center'
+                  justifyContent='space-between'
                 >
-                  <Avatar src={participant.profilePicture} />
-                  <Typography>{participant.firstName}</Typography>
+                  <Stack
+                    padding={1}
+                    direction='row'
+                    spacing={2}
+                    alignItems='center'
+                  >
+                    <Avatar src={participant.profilePicture} />
+                    <Typography>{participant.firstName}</Typography>
+                  </Stack>
+                  <DeleteRoundedIcon
+                    onClick={deleteChat}
+                    sx={{ color: 'tomato', cursor: 'pointer' }}
+                  />
                 </Stack>
               );
             }
