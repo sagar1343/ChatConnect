@@ -2,7 +2,9 @@ import Chat from '../models/chatModel.js';
 
 export const getAllChats = async (req, res) => {
     try {
-        const chats = await Chat.find({ 'participants': { $in: [req.query.id] } }).populate('participants', 'firstName');
+        const chats = await Chat.find({ 'participants': { $in: [req.query.id] } })
+            .populate('participants', 'firstName')
+            .sort({ updatedAt: -1 });
         res.status(200).json({ results: chats.length, chats });
     } catch (error) {
         res.status(500).json({ error: error.message });

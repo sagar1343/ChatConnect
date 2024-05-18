@@ -7,6 +7,7 @@ import userRouter from './routes/userRoutes.js'
 import messageRouter from './routes/messageRoutes.js'
 import chatRouter from './routes/chatRoutes.js'
 import authRouter from './routes/authRoutes.js';
+import socketHandler from './socketHandler.js'
 
 const app = express();
 const httpServer = createServer(app);
@@ -19,17 +20,11 @@ app.use('/chatconnect/api/users', userRouter);
 app.use('/chatconnect/api/messages', messageRouter);
 app.use('/chatconnect/api/chats', chatRouter);
 
-// io.on('connection', (socket) => {
-//   console.log('Connection Established!!', socket.id);
-//   socket.on('sendMessage', (message) => {
-//     console.log('message Recieved', message);
-//     io.emit('recieveMessage', message);
-//   });
-// });
+socketHandler(io);
 
 mongoose
   .connect('mongodb://localhost:27017/chatconnect')
   .then(() => console.log('connected to db'))
-  .catch(console.log('connection failed'));
+  .catch(() => console.log('connection failed'));
 
 httpServer.listen(8000, () => console.log('listening to port: 8000'));

@@ -10,6 +10,9 @@ import {
 import SendIcon from '@mui/icons-material/Send';
 import { useEffect, useRef, useState } from 'react';
 import Message from './Message';
+import { io } from 'socket.io-client';
+
+const socket = io('http://localhost:8000');
 
 const ChatDetails = ({ chatId }) => {
   const [messages, setMessages] = useState([]);
@@ -18,6 +21,10 @@ const ChatDetails = ({ chatId }) => {
   const messageRef = useRef(null);
   const boxRef = useRef(null);
   const senderId = localStorage.getItem('chatconnectID');
+
+  useEffect(() => {
+    socket.emit('join-chat', chatId);
+  }, [chatId]);
 
   useEffect(() => {
     const fetchChatDetails = async () => {
@@ -49,15 +56,18 @@ const ChatDetails = ({ chatId }) => {
     }
   }, [messages]);
 
-  const postMessage = async (newMessage) => {
-    const res = await fetch('http://localhost:8000/chatconnect/api/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newMessage),
-    });
-    const jsonRes = await res.json();
-    return jsonRes;
-  };
+  useEffect(() => {
+    console.log(socket.id);
+    const handleRecievedMessage = (newMessage) => {
+      console.log('Received message:', newMessage);
+      setMessages((prevMessage) => [...prevMessage, newMessage]);
+    };
+    socket.on('message', handleRecievedMessage);
+
+    return () => {
+      socket.off('message', handleRecievedMessage);
+    };
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -70,8 +80,7 @@ const ChatDetails = ({ chatId }) => {
       content: content,
     };
 
-    const res = await postMessage(newMessage);
-    setMessages((prevMessages) => [...prevMessages, res]);
+    socket.emit('sendMessage', newMessage);
     messageRef.current.value = '';
   };
 
