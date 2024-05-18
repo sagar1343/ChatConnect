@@ -3,7 +3,7 @@ import Chat from '../models/chatModel.js';
 export const getAllChats = async (req, res) => {
     try {
         const chats = await Chat.find({ 'participants': { $in: [req.query.id] } })
-            .populate('participants', 'firstName')
+            .populate('participants', 'firstName profilePicture')
             .sort({ updatedAt: -1 });
         res.status(200).json({ results: chats.length, chats });
     } catch (error) {
@@ -28,7 +28,7 @@ export const createChat = async (req, res) => {
 
 export const getChat = async (req, res) => {
     try {
-        const chats = await Chat.findById(req.params.id).populate('participants', 'firstName');
+        const chats = await Chat.findById(req.params.id).populate('participants', 'firstName profilePicture');
         res.status(200).json(chats);
     } catch (error) {
         res.status(500).json({ error: error.message });

@@ -6,7 +6,7 @@ const ChatListItem = ({ item }) => {
       <ListItemAvatar>
         <Avatar
           alt={item?.firstName}
-          // src={item.profilePicture}
+          src={item?.profilePicture}
         />
       </ListItemAvatar>
       <ListItemText>{item?.firstName}</ListItemText>

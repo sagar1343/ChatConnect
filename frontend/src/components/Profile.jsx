@@ -16,12 +16,20 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const id = localStorage.getItem('chatconnectID');
-  const { data, loading } = useFetch(`users/${id}`);
+  const { data, loading, error } = useFetch(`users/${id}`);
 
   useEffect(() => {
     if (data) setUser(data.user);
   }, [data]);
-
+  if (error)
+    return (
+      <Typography
+        fontSize='2rem'
+        align='center'
+      >
+        Try again later
+      </Typography>
+    );
   return (
     <>
       <Navbar />
@@ -47,7 +55,10 @@ const Profile = () => {
               p: 4,
             }}
           >
-            <Avatar sx={{ width: 100, height: 100, mx: 'auto', mb: 2 }} />
+            <Avatar
+              src={user?.profilePicture}
+              sx={{ width: 100, height: 100, mx: 'auto', mb: 2 }}
+            />
             <Typography
               variant='h4'
               gutterBottom

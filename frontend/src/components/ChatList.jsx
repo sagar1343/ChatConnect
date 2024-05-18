@@ -11,6 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import ChatListItem from './ChatListItem';
 import { useNavigate } from 'react-router-dom';
 import NewChatPanel from './NewChatPanel';
+
 const ChatList = ({ active, setActive }) => {
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);

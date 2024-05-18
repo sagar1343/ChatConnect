@@ -7,6 +7,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import SearchBar from './SearchBar';
 import { ListItemAvatar, Avatar, Typography } from '@mui/material';
+
 const NewChatPanel = ({ toggleDrawer }) => {
   const [users, setUsers] = useState([]);
   const handleClick = async (item) => {
@@ -60,7 +61,7 @@ const NewChatPanel = ({ toggleDrawer }) => {
               >
                 <ListItemButton>
                   <ListItemAvatar>
-                    <Avatar />
+                    <Avatar src={item.profilePicture} />
                   </ListItemAvatar>
                   <ListItemText
                     primary={item.firstName}

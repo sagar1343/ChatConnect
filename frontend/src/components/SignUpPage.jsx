@@ -48,15 +48,25 @@ export default function SignUp() {
       lastName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
+      profilePicture: await getBase64(data.get('profilePicture')),
     };
     try {
+      console.log(userData);
       const user = await registerUser(userData);
       console.log('User registered successfully:', user);
-      navigate('/');
+      navigate('/login');
     } catch (error) {
       setError(error.message);
       console.error('Error registering user:', error.message);
     }
+  };
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   return (
@@ -143,6 +153,7 @@ export default function SignUp() {
                 >
                   <TextField
                     type='file'
+                    accept='image/*'
                     fullWidth
                     id='profilePicture'
                     name='profilePicture'

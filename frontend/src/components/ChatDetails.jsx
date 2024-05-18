@@ -6,15 +6,16 @@ import {
   Divider,
   Backdrop,
   CircularProgress,
+  Typography,
+  Avatar,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:8000');
-
 const ChatDetails = ({ chatId }) => {
+  const socket = io('http://localhost:8000/');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [participants, setParticipants] = useState([]);
@@ -57,7 +58,6 @@ const ChatDetails = ({ chatId }) => {
   }, [messages]);
 
   useEffect(() => {
-    console.log(socket.id);
     const handleRecievedMessage = (newMessage) => {
       console.log('Received message:', newMessage);
       setMessages((prevMessage) => [...prevMessage, newMessage]);
@@ -102,17 +102,21 @@ const ChatDetails = ({ chatId }) => {
           height='100%'
           position='relative'
         >
-          <Box
-            display='flex'
-            alignItems='center'
-            padding={2}
-          >
-            {participants.map((participant) => {
-              if (participant._id !== senderId) {
-                return participant.firstName;
-              }
-            })}
-          </Box>
+          {participants.map((participant) => {
+            if (participant._id !== senderId) {
+              return (
+                <Stack
+                  padding={1}
+                  direction='row'
+                  spacing={2}
+                  alignItems='center'
+                >
+                  <Avatar src={participant.profilePicture} />
+                  <Typography>{participant.firstName}</Typography>
+                </Stack>
+              );
+            }
+          })}
           <Divider />
           <Box
             height='calc(100% - 140px)'
