@@ -11,10 +11,12 @@ import ListItem from '@mui/material/ListItem';
 import ChatListItem from './ChatListItem';
 import { useNavigate } from 'react-router-dom';
 import NewChatPanel from './NewChatPanel';
+import GroupBox from './GroupBox';
 
 const ChatList = ({ active, setActive, del }) => {
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);
+  const [created, setCreated] = useState(false);
   const navigate = useNavigate();
   const userId = localStorage.getItem('chatconnectID');
 
@@ -37,7 +39,7 @@ const ChatList = ({ active, setActive, del }) => {
         setChats(filteredChats);
       })
       .catch((err) => console.log(err));
-  }, [open, del]);
+  }, [open, del, created]);
 
   const chatItems = chats.map((item) => (
     <Fragment key={item._id}>
@@ -50,7 +52,7 @@ const ChatList = ({ active, setActive, del }) => {
           navigate(`?chat=${item._id}`);
         }}
       >
-        <ChatListItem item={item.participants[0]} />
+        <ChatListItem item={item.groupName ? item : item.participants[0]} />
       </ListItem>
       <Divider
         variant='inset'
@@ -66,6 +68,7 @@ const ChatList = ({ active, setActive, del }) => {
       <Stack
         direction='row'
         marginBottom={2}
+        spacing={3}
       >
         <Button
           onClick={() => toggleDrawer(true)}
@@ -73,6 +76,10 @@ const ChatList = ({ active, setActive, del }) => {
         >
           New Chat
         </Button>
+        <GroupBox
+          setCreated={setCreated}
+          chats={chats}
+        />
         <Drawer
           open={open}
           onClose={() => toggleDrawer(false)}

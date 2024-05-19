@@ -7,6 +7,7 @@ import userRouter from './routes/userRoutes.js'
 import messageRouter from './routes/messageRoutes.js'
 import chatRouter from './routes/chatRoutes.js'
 import authRouter from './routes/authRoutes.js';
+import groupRouter from './routes/groupRoutes.js';
 import socketHandler from './socketHandler.js'
 
 const app = express();
@@ -19,6 +20,8 @@ app.use('/chatconnect/api/auth', authRouter)
 app.use('/chatconnect/api/users', userRouter);
 app.use('/chatconnect/api/messages', messageRouter);
 app.use('/chatconnect/api/chats', chatRouter);
+app.use('/chatconnect/api/group', groupRouter);
+
 
 socketHandler(io);
 

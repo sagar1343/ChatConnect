@@ -8,6 +8,7 @@ import {
   CircularProgress,
   Typography,
   Avatar,
+  AvatarGroup,
 } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import SendIcon from '@mui/icons-material/Send';
@@ -23,6 +24,7 @@ const ChatDetails = ({ chatId, del, setDel }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [participants, setParticipants] = useState([]);
+  const [chat, setChat] = useState([]);
   const messageRef = useRef(null);
   const boxRef = useRef(null);
   const senderId = localStorage.getItem('chatconnectID');
@@ -37,6 +39,8 @@ const ChatDetails = ({ chatId, del, setDel }) => {
         `http://localhost:8000/chatconnect/api/chats/${chatId}`
       );
       const data = await response.json();
+      console.log(data);
+      setChat(data);
       setParticipants(data.participants);
     };
 
@@ -96,9 +100,6 @@ const ChatDetails = ({ chatId, del, setDel }) => {
     setDel(true);
     navigate('/home');
   };
-  const receiverId = participants.find(
-    (participant) => participant._id !== senderId
-  )?._id;
 
   if (del) return <Banner />;
 
@@ -116,31 +117,57 @@ const ChatDetails = ({ chatId, del, setDel }) => {
           height='100%'
           position='relative'
         >
-          {participants.map((participant) => {
-            if (participant._id !== senderId) {
-              return (
-                <Stack
-                  direction='row'
-                  alignItems='center'
-                  justifyContent='space-between'
-                >
+          {participants.length > 2 ? (
+            <Stack
+              direction='row'
+              alignItems='center'
+              justifyContent='space-between'
+            >
+              <Stack
+                padding={1}
+                direction='row'
+                spacing={2}
+                alignItems='center'
+              >
+                <AvatarGroup max={3}>
+                  {chat.participants.map((participant) => (
+                    <Avatar src={participant?.profilePicture} />
+                  ))}
+                </AvatarGroup>
+                <Typography>{chat.groupName}</Typography>
+              </Stack>
+              <DeleteRoundedIcon
+                onClick={deleteChat}
+                sx={{ color: 'tomato', cursor: 'pointer' }}
+              />
+            </Stack>
+          ) : (
+            participants.map((participant) => {
+              if (participant._id !== senderId) {
+                return (
                   <Stack
-                    padding={1}
                     direction='row'
-                    spacing={2}
                     alignItems='center'
+                    justifyContent='space-between'
                   >
-                    <Avatar src={participant.profilePicture} />
-                    <Typography>{participant.firstName}</Typography>
+                    <Stack
+                      padding={1}
+                      direction='row'
+                      spacing={2}
+                      alignItems='center'
+                    >
+                      <Avatar src={participant.profilePicture} />
+                      <Typography>{participant.firstName}</Typography>
+                    </Stack>
+                    <DeleteRoundedIcon
+                      onClick={deleteChat}
+                      sx={{ color: 'tomato', cursor: 'pointer' }}
+                    />
                   </Stack>
-                  <DeleteRoundedIcon
-                    onClick={deleteChat}
-                    sx={{ color: 'tomato', cursor: 'pointer' }}
-                  />
-                </Stack>
-              );
-            }
-          })}
+                );
+              }
+            })
+          )}
           <Divider />
           <Box
             height='calc(100% - 140px)'
@@ -154,7 +181,6 @@ const ChatDetails = ({ chatId, del, setDel }) => {
                 senderID={item.senderID}
                 message={item.content}
                 createdAt={item.createdAt}
-                receiverId={receiverId}
               />
             ))}
           </Box>

@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const chatSchema = mongoose.Schema({
+  groupName: {
+    type: String
+  },
+  groupDescription: { type: String },
   participants: {
     type: [
       {
