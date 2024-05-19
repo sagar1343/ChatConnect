@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 import { createServer } from 'http';
 import express from 'express';
 import { Server } from 'socket.io';
@@ -26,8 +29,10 @@ app.use('/chatconnect/api/group', groupRouter);
 socketHandler(io);
 
 mongoose
-  .connect('mongodb://localhost:27017/chatconnect')
+  .connect(process.env.MONGO_URL)
   .then(() => console.log('connected to db'))
   .catch(() => console.log('connection failed'));
 
-httpServer.listen(8000, () => console.log('listening to port: 8000'));
+const port = process.env.PORT || 8000;
+
+httpServer.listen(port, () => console.log(`listening to port: ${port}`));
