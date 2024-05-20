@@ -14,7 +14,7 @@ const NewChatPanel = ({ toggleDrawer }) => {
     const senderId = localStorage.getItem('chatconnectID');
     try {
       const response = await fetch(
-        'http://localhost:8000/chatconnect/api/chats',
+        'https://chatconnect.up.railway.app/chatconnect/api/chats',
         {
           method: 'POST',
           headers: {

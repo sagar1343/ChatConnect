@@ -12,7 +12,7 @@ const Playground = () => {
   };
 
   useEffect(() => {
-    const socket = io('http://localhost:8000');
+    const socket = io('https://chatconnect.up.railway.app');
     socket.on('connect', () => {
       console.log('Connected with ID:', socket.id);
       setNewSocket(socket);

@@ -9,7 +9,7 @@ const useFetch = (endpoint) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const url = `http://localhost:8000/chatconnect/api/${endpoint}`;
+        const url = `https://chatconnect.up.railway.app/chatconnect/api/${endpoint}`;
         const res = await fetch(url);
         if (!res.ok) {
           throw new Error('Failed to fetch data');

@@ -51,7 +51,7 @@ export default function GroupBox({ chats, setCreated }) {
     if (groupId) {
       try {
         const response = await fetch(
-          'http://localhost:8000/chatconnect/api/group/remove',
+          'https://chatconnect.up.railway.app/chatconnect/api/group/remove',
           {
             method: 'PATCH',
             headers: {
@@ -87,7 +87,7 @@ export default function GroupBox({ chats, setCreated }) {
     };
     try {
       const response = await fetch(
-        'http://localhost:8000/chatconnect/api/group',
+        'https://chatconnect.up.railway.app/chatconnect/api/group',
         {
           method: 'POST',
           headers: {

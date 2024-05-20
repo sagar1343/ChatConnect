@@ -18,7 +18,7 @@ import Message from './Message';
 import Banner from './Banner';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:8000/');
+const socket = io('https://chatconnect.up.railway.app/');
 
 const ChatDetails = ({ chatId, del, setDel }) => {
   const [messages, setMessages] = useState([]);
@@ -36,7 +36,7 @@ const ChatDetails = ({ chatId, del, setDel }) => {
   useEffect(() => {
     const fetchChatDetails = async () => {
       const response = await fetch(
-        `http://localhost:8000/chatconnect/api/chats/${chatId}`
+        `https://chatconnect.up.railway.app/chatconnect/api/chats/${chatId}`
       );
       const data = await response.json();
       console.log(data);
@@ -46,7 +46,7 @@ const ChatDetails = ({ chatId, del, setDel }) => {
 
     const fetchMessages = async () => {
       const response = await fetch(
-        `http://localhost:8000/chatconnect/api/messages?chatID=${chatId}`
+        `https://chatconnect.up.railway.app/chatconnect/api/messages?chatID=${chatId}`
       );
       const data = await response.json();
       setMessages(data);
@@ -94,9 +94,12 @@ const ChatDetails = ({ chatId, del, setDel }) => {
   };
 
   const deleteChat = async () => {
-    await fetch(`http://localhost:8000/chatconnect/api/chats/${chatId}`, {
-      method: 'DELETE',
-    });
+    await fetch(
+      `https://chatconnect.up.railway.app/chatconnect/api/chats/${chatId}`,
+      {
+        method: 'DELETE',
+      }
+    );
     setDel(true);
     navigate('/home');
   };

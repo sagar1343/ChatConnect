@@ -18,11 +18,14 @@ const defaultTheme = createTheme();
 
 const login = async (data) => {
   try {
-    const res = await fetch('http://localhost:8000/chatconnect/api/auth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      'https://chatconnect.up.railway.app/chatconnect/api/auth',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }
+    );
     const jsonRes = await res.json();
     return jsonRes;
   } catch (error) {

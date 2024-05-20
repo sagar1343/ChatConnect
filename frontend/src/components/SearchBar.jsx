@@ -7,7 +7,7 @@ const SearchBar = ({ setUsers }) => {
   const senderId = localStorage.getItem('chatconnectID');
 
   const fetchUser = async (searchedUser) => {
-    const URL = 'http://localhost:8000/chatconnect/api/users';
+    const URL = 'https://chatconnect.up.railway.app/chatconnect/api/users';
     try {
       const res = await fetch(`${URL}?search=${searchedUser}`);
       const jsonRes = await res.json();

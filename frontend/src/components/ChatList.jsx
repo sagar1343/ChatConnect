@@ -24,7 +24,9 @@ const ChatList = ({ active, setActive, del }) => {
     setOpen((value) => !value);
   };
   useEffect(() => {
-    fetch(`http://localhost:8000/chatconnect/api/chats?id=${userId}`)
+    fetch(
+      `https://chatconnect.up.railway.app/chatconnect/api/chats?id=${userId}`
+    )
       .then((res) => res.json())
       .then((json) => json.chats)
       .then((chats) =>
