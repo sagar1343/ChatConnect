@@ -34,6 +34,7 @@ const ChatDetails = ({ chatId, del, setDel }) => {
   }, [chatId]);
 
   useEffect(() => {
+    setLoading(true);
     const fetchChatDetails = async () => {
       const response = await fetch(
         `https://chatconnect.up.railway.app/chatconnect/api/chats/${chatId}`
@@ -50,12 +51,12 @@ const ChatDetails = ({ chatId, del, setDel }) => {
       );
       const data = await response.json();
       setMessages(data);
-      setLoading(false);
     };
 
     if (chatId) {
-      fetchChatDetails();
-      fetchMessages();
+      fetchChatDetails()
+        .then(() => fetchMessages()
+          .then(() => setLoading(false)));
     }
     setDel(false);
   }, [chatId]);
